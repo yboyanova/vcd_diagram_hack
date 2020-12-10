@@ -1,0 +1,80 @@
+{
+    "locations": [{
+        "locationId": "123",
+        "category": "site",
+        "siteName": "Sofia",
+        "orgName": "STFTestOrg",
+        "organizations": [{
+            "name": "Organization Tsvetan"
+        }],
+        "vdcGroups": [{
+            "name": "group1",
+            "category": "group",
+            "egress": "Edge Gateway 1",
+            "vdcs": [{
+                "name": "Vdc 1",
+                "category": "vdc",
+                "pvdc": "pvdc",
+                "location": {
+                    "orgName": "Organization Tsvetan",
+                    "siteName": "Sofia"
+                },
+                "vapps": [{
+                    "name": "vapp1",
+                    "vappNetworks": [{
+                        "name": "vapp1 network"
+                    }, {
+                        "name": "vapp2 network"
+                    }],
+                    "vms": [{
+                        "name": "vm1",
+                        "connectedTo": [{
+                            "name": "vapp1 network"
+                        }]
+                    }]
+                }],
+                "orgVdcNetworks": [{
+                    "name": "net1",
+                    "type": "routed",
+                    "connectedTo": "Edge1"
+                }], 
+                "egdeGateways": [{
+                    "name": "Edge1"
+                }]
+            }]
+        }],
+        "vdcs": [{
+            "name": "Vdc 2",
+            "category": "vdc",
+            "vapps": [{
+                "name": "vapp2",
+                "vappNetworks": [{
+                    "name": "vapp2 network 1"
+                }, {
+                    "name": "vapp2 network 2"
+                }],
+                "vms": [{
+                    "name": "vm1",
+                    "connectedTo": [{
+                        "name": "vapp2 network 1"
+                    }]
+                }]
+            }],
+            "orgVdcNetworks": [{
+                "name": "net2",
+                "type": "routed",
+                "connectedTo": "Edge2"
+            }], 
+            "egdeGateways": [{
+                "name": "Edge2"
+            }]
+        }]
+    }, {
+        "locationId": "124",
+        "siteName": "Boston",
+        "orgName": "STFTestOrg2",
+        "organizations": [{
+            "name": "Organization Presi"
+        }]
+    }]
+}

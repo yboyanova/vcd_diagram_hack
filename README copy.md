@@ -1,0 +1,4 @@
+-   json updates
+-   generate nodes
+-   generate connections
+-   intergate in vcd
