@@ -32,7 +32,7 @@ export class DiagramComponent implements AfterViewInit {
   roundedRectangleParams = {
     parameter1: 3,  // set the rounded corner
     spot1: go.Spot.TopLeft, spot2: go.Spot.BottomRight // make content go all the way to inside edges of rounded corners
-  }
+  };
 
   ngAfterViewInit(): void {
     this.diagram = $(go.Diagram, "vcd-diagram", {
@@ -118,9 +118,17 @@ export class DiagramComponent implements AfterViewInit {
             alignment: go.Spot.Right
           })
         ),
-        $(go.Panel,
-          { height: 17 },
-          $("TreeExpanderButton")
+        $(go.Panel,  // this is underneath the "BODY"
+          { height: 17 },  // always this height, even if the TreeExpanderButton is not visible
+          $("TreeExpanderButton",
+            { width: 14,
+              "ButtonIcon.stroke": "white",
+              "ButtonBorder.fill": "lightblue",
+              "ButtonBorder.stroke": "transparent",
+            },
+          { alignment: go.Spot.Bottom, alignmentFocus: go.Spot.Top },
+          new go.Binding("ButtonBorder.fill", "isTreeExpanded", function(v) { return v ? "grey" : "lightblue"; }),
+          )
         )
       )
     );
