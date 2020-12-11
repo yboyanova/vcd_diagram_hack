@@ -59,13 +59,10 @@ export class DiagramComponent implements AfterViewInit {
       go.Node, "Auto",
       {
         isTreeExpanded: false,
-        locationSpot: go.Spot.Top,
-        alignment: new go.Spot(0, 0),
         isShadowed: true,
         shadowBlur: 1,
         shadowOffset: new go.Point(0, 2),
-        shadowColor: "#D7D7D7",
-        margin: new go.Margin(16, 16, 16, 18)
+        shadowColor: "#D7D7D7"
       },
       $(go.Shape, 'RoundedRectangle', this.roundedRectangleParams, {
         fill: "#ffffff",
@@ -73,32 +70,43 @@ export class DiagramComponent implements AfterViewInit {
         desiredSize: new go.Size(325, 80)
       }),
       $(go.Panel, "Vertical",
+
+      // Main Content
         $(go.Panel, "Horizontal",
+          {
+            margin: new go.Margin(16, 16, 10, 16)
+          },
+
+          // Type Card
           $(go.Panel, "Spot",
             $(go.Shape, "RoundedRectangle", this.roundedRectangleParams, {
               margin: new go.Margin(0, 16, 0, 0),
               desiredSize: new go.Size(48, 48),
               fill: "#89CBDF",
-              stroke: null,
-              alignment: go.Spot.Left
+              stroke: null
             },
               new go.Binding("fill", "type", type => this.getColorByType(type))
             ),
             $(go.Picture, {
               desiredSize: new go.Size(30, 30),
-              alignment: go.Spot.Center,
-              // alignmentFocus: new go.Spot(0, 0, 12, 5),
+              alignment: go.Spot.Center
             },
               new go.Binding("source", "", (data) => this.getIconByType(data.type, data.status))
             )
           ),
+
+          // Name and Type
           $(go.Panel, "Table",
+          {
+            desiredSize: new go.Size(200, 40)
+          },
             $(go.TextBlock,
               {
                 column: 0,
                 row: 0,
                 alignment: go.Spot.Left,
-                font: "11px Metropolis"
+                font: "11px Metropolis",
+                stroke: "#565656"
               },
               new go.Binding("text", "type")
             ),
@@ -107,30 +115,35 @@ export class DiagramComponent implements AfterViewInit {
                 column: 0,
                 row: 1,
                 alignment: go.Spot.Left,
-                font: "18px Metropolis"
+                font: "18px Metropolis",
+                stroke: "#0079B8"
               },
-              new go.Binding("text", "name")
+              new go.Binding("text", "name"),
+              new go.Binding("stroke", "type", (type) => type === TYPE.site || type === TYPE.zone ? "#565656" : "#0079B8" )
             ),
           ),
+
+          // Context Menu
           $(go.Picture, {
             source: "assets/ellipsis-vertical-line.svg",
             desiredSize: new go.Size(20, 20),
             alignment: go.Spot.Right
           })
-        ),
-        $(go.Panel,  // this is underneath the "BODY"
-          { height: 17 },  // always this height, even if the TreeExpanderButton is not visible
-          $("TreeExpanderButton",
-            { width: 14,
-              "ButtonIcon.stroke": "white",
-              "ButtonBorder.fill": "lightblue",
-              "ButtonBorder.stroke": "transparent",
-            },
-          { alignment: go.Spot.Bottom, alignmentFocus: go.Spot.Top },
+
+        )
+      ),
+        $("TreeExpanderButton",
+          {
+            width: 16,
+            height: 16,
+            margin: 4,
+            "ButtonIcon.stroke": "white",
+            "ButtonBorder.fill": "lightblue",
+            "ButtonBorder.stroke": "transparent"
+          },
+          { alignment: go.Spot.BottomCenter},
           new go.Binding("ButtonBorder.fill", "isTreeExpanded", function(v) { return v ? "grey" : "lightblue"; }),
           )
-        )
-      )
     );
 
     // Edge nodes template
